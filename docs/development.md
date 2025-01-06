@@ -64,6 +64,22 @@ git push origin feat/new-file-type
 > After the push, your dictionary should be available at a URL like `https://raw.githubusercontent.com/Su-informatics-lab/ipo-dictionary/feat/new-file-type/schema.json`. You can use this URL to test your changes in a Gen3 environment.
 
 ## Step 7: Merge your changes
+When you are satisfied with your changes and have tested them in a Gen3 environment, merge your feature changes into the `develop` branch:
+
+```bash
+git checkout develop
+git merge feat/new-file-type
+```
+
+At this point you should most likely delete both the local and remote copies of your feature branch:
+
+```bash
+git push origin --delete feat/new-file-type
+git branch -d feat/new-file-type
+```
+
+Now you are ready, but not required, to merge these changes into `main` and create a new release. If there are additional updates planned, then repeat all of the above steps to continue adding new features onto the `develop` branch for the next release.
+
 > [!NOTE]
 > Release branches are created from main and immediately merged from develop in order to faciliate the pull request process (PR).
 
@@ -75,7 +91,7 @@ git merge develop
 ```
 Repeat steps 4-6 above in order to create a new tagged version of the `schema.json` file for final testing. The naming convention for the tag should be something like: `2.1.0-rc1`. When you push the tagged schema file in step 6 it will become available for final testing in staging and other environments.
 
-When testing is complete, merge your changes into the `main` branch. This will trigger a new release of the dictionary. Because the main branch is protected, you will need to create a pull request and have it reviewed by a team member. This process is most easily accomplished using the GitHub web interface or the GitHub desktop application.
+When testing is complete, merge your changes into the `main` branch. Because the main branch is protected, you will need to create a pull request and have it reviewed by a team member. This process is most easily accomplished using the GitHub web interface or the GitHub desktop application. After the PR is closed and the changes are merged, you can (and should) remove the release branch. The Github web UI should prompt for this when completing the merge.
 
 ## Step 8: Create a release
 After your changes have been merged into the `main` branch, create a new release. This will tag the release with a version number and make it available for deployment in a Gen3 environment.
