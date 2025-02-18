@@ -842,6 +842,12 @@ properties:
     type:
     - number
     - 'null'
+  major_primary_site:
+    term:
+      description: Major Primary Site
+    type:
+    - string 
+
   cases:
     $ref: _definitions.yaml#/to_one
   follow_ups:

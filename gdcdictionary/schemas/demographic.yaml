@@ -185,6 +185,12 @@ properties:
     # - Liver Disease - Other
     # - Unknown
     # - Other
+  cause_of_death:
+    description: Cause of Death
+    type:
+    - string 
+
+
   cases:
     $ref: _definitions.yaml#/to_one
   project_id:

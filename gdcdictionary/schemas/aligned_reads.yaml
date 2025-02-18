@@ -90,6 +90,7 @@ properties:
     enum:
     - BAM
     - CRAM
+    - CRAI
   experimental_strategy:
     term:
       $ref: _terms.yaml#/experimental_strategy
