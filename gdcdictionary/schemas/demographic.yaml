@@ -189,6 +189,10 @@ properties:
     description: Cause of Death
     type:
     - string 
+  age:
+    description: Age of patient.
+    type:
+    - string 
 
 
   cases:
