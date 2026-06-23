@@ -1,0 +1,16 @@
+name: Dictionary tests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run validation
+        run: docker run --rm -v ${{ github.workspace }}:/mnt/host quay.io/rds/dictutils
