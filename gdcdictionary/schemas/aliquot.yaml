@@ -102,7 +102,7 @@ properties:
 
   #v1.0.2 06/24/2025
   tissue_type:
-    description: Term to describe type of tisue in which Aliquot was collected.
+    description: Term to describe type of tissue in which Aliquot was collected.
     type:
     - string
     # enum:
