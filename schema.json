@@ -222,8 +222,8 @@
     },
     "_settings.yaml": {
         "enable_case_cache": false,
-        "_dict_commit": "584eed5b651a590f349f46e2f39348e60eaa427f",
-        "_dict_version": "1.0.0"
+        "_dict_commit": "520a25999fd183f6c5b7ddef2980f3e839517da5",
+        "_dict_version": "1.0.2"
     },
     "treatment.yaml": {
         "$schema": "http://json-schema.org/draft-04/schema#",
@@ -781,6 +781,12 @@
             },
             "container_type": {
                 "description": "Term to describe type of container in which Aliquot was collected.",
+                "type": [
+                    "string"
+                ]
+            },
+            "tissue_type": {
+                "description": "Term to describe type of tissue in which Aliquot was collected.",
                 "type": [
                     "string"
                 ]
@@ -7485,6 +7491,12 @@
                     "number"
                 ]
             },
+            "orien_specimen_id": {
+                "description": "orien_specimen_id.",
+                "type": [
+                    "string"
+                ]
+            },
             "cases": {
                 "$ref": "_definitions.yaml#/to_one"
             },
@@ -9364,6 +9376,13 @@
             },
             "test_unit": {
                 "description": "The unit for the test",
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "biospecimen_type": {
+                "description": "The biospecimen type for the test",
                 "type": [
                     "string",
                     "null"

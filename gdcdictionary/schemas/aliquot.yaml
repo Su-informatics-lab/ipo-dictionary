@@ -99,6 +99,21 @@ properties:
     # - 15 ml cryovials
     # - Collection Cups
     # - Collection Kit
+
+  #v1.0.2 06/24/2025
+  tissue_type:
+    description: Term to describe type of tissue in which Aliquot was collected.
+    type:
+    - string
+    # enum:
+    # - Abnormal
+    # - Normal
+    # - Peritumoral
+    # - Tumor
+    # - Unknown
+    # - Not Reported
+    # - Not Allowed To Collect
+
   project_id:
     $ref: _definitions.yaml#/project_id
   labs:

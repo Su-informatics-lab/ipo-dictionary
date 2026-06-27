@@ -962,6 +962,12 @@ properties:
     type:
     - string
     - 'null'
+  biospecimen_type:
+  # V1.0.1 Added
+    description: The biospecimen type for the test
+    type:
+    - string
+    - 'null'
   follow_ups:
     $ref: _definitions.yaml#/to_one
   aliquots:
