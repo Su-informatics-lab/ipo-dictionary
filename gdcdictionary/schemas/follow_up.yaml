@@ -758,7 +758,7 @@ properties:
     - number
   #v1.0.2 06/24/2025
   orien_specimen_id:
-    description: orien_specimen_id.
+    description: Unique identifier given by ORIEN to each biospecimen used for sequencing.
     type:
     - string
   cases:
