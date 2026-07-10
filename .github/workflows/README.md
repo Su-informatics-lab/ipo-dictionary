@@ -123,14 +123,14 @@ if ($LASTEXITCODE -eq 0) {
 Bash
 ```bash
 TrustPolicyPath=$(mktemp)
-cat > $TrustPolicyPath <<'EOF'
+cat > $TrustPolicyPath <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::112233445566:oidc-provider/token.actions.githubusercontent.com"
+        "Federated": "${OidcArn}"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
