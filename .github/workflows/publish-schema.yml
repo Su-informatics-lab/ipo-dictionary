@@ -1,0 +1,86 @@
+---
+name: Publish schema to S3
+
+"on":
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Semver tag to publish, such as 1.0.2
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Resolve version
+        id: version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            version="${{ inputs.version }}"
+          else
+            version="${{ github.event.release.tag_name }}"
+          fi
+
+          if [[ ! "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Expected a release tag like 1.2.3, got '${version}'." >&2
+            exit 1
+          fi
+
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+
+      - name: Checkout release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.version.outputs.version }}
+
+      - name: Verify schema version
+        shell: bash
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if [[ ! -f schema.json ]]; then
+            echo "schema.json is missing from the release tag." >&2
+            exit 1
+          fi
+
+          actual="$(
+            python3 <<'PY'
+          import json
+
+          with open("schema.json", encoding="utf-8") as schema_file:
+              schema = json.load(schema_file)
+
+          print(schema["_settings.yaml"]["_dict_version"])
+          PY
+          )"
+          if [[ "${actual}" != "${VERSION}" ]]; then
+            printf "schema.json _dict_version '%s' " "${actual}" >&2
+            printf "does not match release tag '%s'.\n" "${VERSION}" >&2
+            exit 1
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6.1.0
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          allowed-account-ids: "066964538924"
+      - name: Upload schema.json
+        shell: bash
+        env:
+          AWS_S3_BUCKET: ${{ vars.AWS_S3_BUCKET }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          aws s3 cp schema.json \
+            "s3://${AWS_S3_BUCKET}/${VERSION}/schema.json" \
+            --content-type application/json \
+            --only-show-errors
