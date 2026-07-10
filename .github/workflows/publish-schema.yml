@@ -53,7 +53,7 @@ jobs:
           fi
 
           actual="$(
-            python <<'PY'
+            python3 <<'PY'
           import json
 
           with open("schema.json", encoding="utf-8") as schema_file:
