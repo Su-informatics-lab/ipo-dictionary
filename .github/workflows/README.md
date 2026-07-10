@@ -79,14 +79,14 @@ Create or update the role trust policy:
 Powershell
 ```powershell
 $TrustPolicyPath = Join-Path $env:TEMP "ipo-dictionary-github-trust-policy.json"
-@'
+@"
 {
   "Version": "2012-10-17",
   "Statement": [
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::112233445566:oidc-provider/token.actions.githubusercontent.com"
+        "Federated": "$OidcArn"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
@@ -103,7 +103,7 @@ $TrustPolicyPath = Join-Path $env:TEMP "ipo-dictionary-github-trust-policy.json"
     }
   ]
 }
-'@ | Set-Content -Path $TrustPolicyPath -Encoding utf8
+"@ | Set-Content -Path $TrustPolicyPath -Encoding utf8
 
 aws iam get-role --role-name $RoleName --profile $Profile 2>$null
 if ($LASTEXITCODE -eq 0) {
